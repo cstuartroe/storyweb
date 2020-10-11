@@ -1,0 +1,8 @@
+venv
+.idea
+works
+storyweb/settings_secret.py
+*.sqlite3
+node_modules
+__pycache__
+static/js/main.js

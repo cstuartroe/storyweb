@@ -1,0 +1,37 @@
+@font-face {
+    font-family: 'Museo Sans';
+    src:  url('/static/fonts/MuseoSans_500-webfont.woff2') format('woff2'),
+    url('/static/fonts/MuseoSans_500-webfont.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Simplifica";
+    src: url("/static/fonts/SIMPLIFICA Typeface.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Gidole';
+    src:  url('/static/fonts/Gidole-Regular.woff2') format('woff2'),
+    url('/static/fonts/Gidole-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: "Corbert";
+    src: url("/static/fonts/Corbert-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("/static/fonts/Raleway-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Infinity";
+    src: url("/static/fonts/Infinity.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: 'Butler';
+    src:  url('/static/fonts/Butler.woff2') format('woff2'),
+    url('/static/fonts/Butler.woff') format('woff');
+}

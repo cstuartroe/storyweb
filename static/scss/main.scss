@@ -1,0 +1,114 @@
+$forestGreen: #1bab68;
+$deepBlue: #29518a;
+$gold: #d4af37;
+$gray: #444444;
+$topSpacing: 10vh;
+
+.storyweb-app {
+    h1, h2, h3 {
+        text-align: center;
+        padding-top: 1vh;
+    }
+
+    p {
+        text-align: justify;
+        margin: 4vh 8vw;
+    }
+
+    p.byline {
+        text-align: center;
+        margin-top: auto;
+    }
+
+    .taCenter {
+        text-align: center;
+    }
+
+    hr {
+        margin: 3vh 20vw;
+    }
+
+    #backdrop {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        background-size: cover;
+        z-index: -1;
+    }
+
+    #style-wrapper {
+        padding-top: $topSpacing;
+    }
+
+    .doctable {
+        width: 100%;
+        border: 1px solid;
+
+        td, th {
+            text-align: center;
+            font-size: 2.25vh;
+            padding: 10px;
+        }
+
+        thead {
+            border-bottom: 1px solid;
+        }
+    }
+
+    // Styles
+
+    .theme-light {
+        p, h1, h2, h3 {
+            color: black;
+        }
+
+        hr, .doctable, .doctable thead {
+            border-color: $gray;
+        }
+
+        .textBg {
+            background-color: white;
+        }
+    }
+    .theme-dark {
+        p, h1, h2, h3, th, td {
+            color: white;
+        }
+
+        hr, .doctable, .doctable thead {
+            border-color: white;
+        }
+
+        .textBg {
+            background-color: #2c3037;
+        }
+    }
+
+    .bg-gray {
+        background-color: $gray;
+    }
+
+    .linkColor-deep-blue a {
+        color: $deepBlue;
+    }
+
+    .linkColor-forest-green a {
+        color: $forestGreen;
+    }
+
+    .highlightColor-gold .highlight {
+        color: $gold;
+    }
+
+    .blockColor-deep-blue .blockColor {
+        background-color: $deepBlue;
+    }
+
+    .blockColor-gray .blockColor {
+        background-color: $gray;
+    }
+}
+
+.storyweb-app > div > div.container {
+    min-height: #{100vh - $topSpacing};
+}
