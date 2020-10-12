@@ -4,6 +4,7 @@ $gold: #d4af37;
 $gray: #444444;
 $softDark: #2c3037;
 $topSpacing: 10vh;
+$bottomSpacing: 10vh;
 $sidePadding: 8vw;
 
 .storyweb-app {
@@ -40,10 +41,12 @@ $sidePadding: 8vw;
 
     #style-wrapper {
         padding-top: $topSpacing;
+        padding-bottom: $bottomSpacing;
     }
 
     #style-wrapper > .textBg {
-        padding-bottom: 15vh;
+        padding-top: 2vh;
+        padding-bottom: 5vh;
     }
 
     .doctable {
@@ -189,8 +192,12 @@ $sidePadding: 8vw;
     .blockColor-gray .blockColor {
         background-color: $gray;
     }
+
+    a.broken {
+        color: red;
+    }
 }
 
 .storyweb-app > div > div.container {
-    min-height: #{100vh - $topSpacing};
+    min-height: #{100vh - $topSpacing - $bottomSpacing};
 }

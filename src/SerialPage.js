@@ -16,7 +16,6 @@ class SerialPage extends Component {
     let {serialName} = this.props;
     let work = getWorkMetadata(this.props);
     let serial = getSerial({work, serialName});
-    console.log(work)
     document.title = serial.title + " | " + work.details.title + " | Storyweb";
   }
 

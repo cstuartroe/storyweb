@@ -13,12 +13,13 @@ function MarkdownText({content, work}) {
     case "Str": return content.value;
 
     case "Link":
-      console.log(content);
       if (content.url === "") {
         if (content.children.length !== 0) {
           let articles = work.articles.filter(article => article.title === content.children[0].value);
           if (articles.length === 0) {
-            return <Link to={""}>No article entitled {article.title}</Link>
+            return <a className={"broken"} href={"/w/" + work.slug + "/a/" + content.children[0].value}>
+              {content.children[0].value.replace("_", " ")}
+            </a>;
           } else {
             let article = articles[0];
             return <Link to={"/w/" + work.slug + "/a/" + article.slug}>{article.title}</Link>
