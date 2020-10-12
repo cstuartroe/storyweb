@@ -2,7 +2,9 @@ $forestGreen: #1bab68;
 $deepBlue: #29518a;
 $gold: #d4af37;
 $gray: #444444;
+$softDark: #2c3037;
 $topSpacing: 10vh;
+$sidePadding: 8vw;
 
 .storyweb-app {
     h1, h2, h3 {
@@ -12,7 +14,7 @@ $topSpacing: 10vh;
 
     p {
         text-align: justify;
-        margin: 4vh 8vw;
+        margin: 3vh $sidePadding;
     }
 
     p.byline {
@@ -40,11 +42,19 @@ $topSpacing: 10vh;
         padding-top: $topSpacing;
     }
 
-    .doctable {
-        width: 100%;
-        border: 1px solid;
+    #style-wrapper > .textBg {
+        padding-bottom: 15vh;
+    }
 
-        td, th {
+    .doctable {
+        border: 1px solid;
+        table-layout: fixed;
+    }
+
+    .doctable, .articleTable {
+        width: 100%;
+
+        td, th, p {
             text-align: center;
             font-size: 2.25vh;
             padding: 10px;
@@ -55,14 +65,86 @@ $topSpacing: 10vh;
         }
     }
 
-    // Styles
+    .articleTable p {
+        margin: 0;
+    }
+
+    .articleSection, .storiesSection {
+        padding: 0 $sidePadding;
+
+        h3 {
+            text-align: left;
+        }
+    }
+
+    .articleFrame {
+        h2 {
+            border-bottom: 1px solid white;
+        }
+
+        h2, h3 {
+            text-align: left;
+            margin: 0 $sidePadding;
+        }
+    }
+
+    .infoPanel {
+        border: 1px solid;
+
+        img {
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .infoPanelTitle {
+            margin: 0;
+            text-align: center;
+            font-size: larger;
+        }
+    }
+
+    .serialTile {
+        padding: 0 $sidePadding;
+
+        h3, p {
+            text-align: left;
+            margin: 0;
+            padding-top: 0;
+        }
+
+        .serialTileImage {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            background-position: center;
+            background-size: cover;
+        }
+    }
+
+    .serialTopImage {
+        max-width: 100%;
+        max-height: 40vh;
+        display: block;
+        margin: 0 auto;
+    }
+
+    // Colors
 
     .theme-light {
         p, h1, h2, h3 {
-            color: black;
+            color: $softDark;
         }
 
-        hr, .doctable, .doctable thead {
+        hr, .doctable, .doctable thead, .infoPanel {
             border-color: $gray;
         }
 
@@ -75,12 +157,12 @@ $topSpacing: 10vh;
             color: white;
         }
 
-        hr, .doctable, .doctable thead {
+        hr, .doctable, .doctable thead, .infoPanel {
             border-color: white;
         }
 
         .textBg {
-            background-color: #2c3037;
+            background-color: $softDark;
         }
     }
 

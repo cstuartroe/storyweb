@@ -35,7 +35,7 @@ function StoryTable({stories, workName, serials=[], dontSort=false, serialName=n
   }
 
   return (
-    <div>
+    <div className={"storiesSection"}>
       <h2>Stories</h2>
       <table className={"doctable"}>
         <thead>
@@ -43,7 +43,7 @@ function StoryTable({stories, workName, serials=[], dontSort=false, serialName=n
           <th>Title</th>
           <th>Location</th>
           <th>Date</th>
-          {serials.length === 0 ? null : <th>Part of the serials</th>}
+          {serials.length === 0 ? null : <th>Part of the serial(s)</th>}
         </tr>
         </thead>
         <tbody>

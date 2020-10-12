@@ -19,11 +19,10 @@ DOCTYPE_ALIASES = {
 }
 
 
-def document(request, work, doctype, docname):
-    print(f"{work}/{DOCTYPE_ALIASES[doctype]}/{docname}")
+def document(request, work, doctype, docname, ext):
     return serve(
         request,
-        f"{work}/{DOCTYPE_ALIASES[doctype]}/{urllib.parse.unquote(docname)}",
+        f"{work}/{DOCTYPE_ALIASES[doctype]}/{docname}.{ext}",
         settings.STORIES_ROOT
     )
 
@@ -34,7 +33,7 @@ STORY_METADATA_FIELDS = {
 }
 
 
-def get_story_metadata(dirname, filename):
+def get_document_metadata(dirname, filename):
     filepath = os.path.join(dirname, filename)
 
     with open(filepath, "r") as fh:
@@ -63,8 +62,9 @@ def get_story_metadata(dirname, filename):
 def markdown_files(dirname):
     out = []
     for filename in os.listdir(dirname):
+        print(filename)
         if filename.endswith(".md"):
-            out.append(get_story_metadata(dirname, filename))
+            out.append(get_document_metadata(dirname, filename))
     return out
 
 

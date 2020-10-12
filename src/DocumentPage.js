@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import {Link} from "react-router-dom";
 const mdparse = require("@textlint/markdown-to-ast").parse;
 
+import InfoPanel from "./InfoPanel";
+
 import {setWorkBackground, getWorkMetadata} from "./WorkPage";
+import {getSerial} from "./SerialPage";
+import MarkdownLine from "./MarkdownLine";
 
 
 function getDocMetadata({work, docType, docName}) {
   return work[docType].filter(doc => doc.slug === docName)[0];
-}
-
-function getSerial({work, serialName}) {
-  return serialName ? work.details.serials.filter(serial => serial.slug === serialName)[0] : null;
 }
 
 
@@ -30,29 +30,6 @@ function getAdjacentStories({work, docName, serialName}) {
   return out;
 }
 
-
-function MarkdownText({content}) {
-  if (content.type === "Str") {
-    return content.value;
-  } else {
-    return JSON.stringify(content);
-  }
-}
-
-
-function MarkdownLine({line}) {
-  if (line.type === "Header") {
-    return React.createElement("h" + line.depth, {},
-      line.children.map((child, i) => <MarkdownText content={child} key={i}/>));
-  } else if (line.type === "Paragraph") {
-    return React.createElement("p", {},
-      line.children.map((child, i) => <MarkdownText content={child} key={i}/>));
-  } else if (line.type === "HorizontalRule") {
-    return <hr/>
-  } else {
-    return <p>{JSON.stringify(line)}</p>
-  }
-}
 
 class DocumentPage extends Component {
   state = {
@@ -82,7 +59,7 @@ class DocumentPage extends Component {
     let docMetadata = getDocMetadata({work, docName, docType});
     let something = getAdjacentStories({work, docName, serialName});
 
-    document.title = docMetadata.title + " - Storyweb";
+    document.title = docMetadata.title + " | " + work.details.title + " | Storyweb";
 
     this.setState({docMetadata, prevStory: something.prevStory, nextStory: something.nextStory})
 
@@ -94,26 +71,56 @@ class DocumentPage extends Component {
   render() {
     let work = getWorkMetadata(this.props);
     let serial = getSerial({work, serialName: this.props.serialName});
-    let {prevStory, nextStory, ast: {children}} = this.state;
+    let {docMetadata, prevStory, nextStory, ast: {children}} = this.state;
+    let {docType} = this.props;
 
-    let lines = null;
+    let lines = [];
     for (let i in children) {
-      if (children[i].type === "Header") {
+      if (children[i].type === "Header" && children[i].depth === 1) {
         lines = children.slice(i-0+1);
         break;
       }
     }
-    if (lines === null) {
+    if (lines.length === 0) {
       return null;
     }
 
+    let firstSectionLines;
+    if (docType === "articles") {
+      firstSectionLines = lines;
+      lines = [];
+      for (let i in firstSectionLines) {
+        if (firstSectionLines[i].type === "Header" && firstSectionLines[i].depth === 2) {
+          lines = firstSectionLines.slice(i-0);
+          firstSectionLines = firstSectionLines.slice(0, i-0);
+          break;
+        }
+      }
+    }
+
+    let docTypeClasses = {
+      "articles": "articleFrame",
+      "stories": "storyFrame"
+    }
+
+    let articleTypeDescriptors = {
+      person: "A character in ",
+      location: "A location in ",
+      item: "An item in "
+    };
+
     return (
-      <div className={"container textBg"}>
+      <div className={"container textBg " + docTypeClasses[docType]}>
         <div className={"row"}>
           <div className={"col-12"}>
-            <h1>{this.state.docMetadata.title}</h1>
+            <h1>{docMetadata.title}</h1>
+
             <p className={"byline"}>
-              {"Part of "}
+              {docType === "stories" ?
+                "Part of "
+                :
+                articleTypeDescriptors[docMetadata.type] || "A noun in "
+              }
               {serial ?
                 <span>
                   {"the serial "}
@@ -126,6 +133,7 @@ class DocumentPage extends Component {
               {" by "}
               {work.details.author}
             </p>
+
             {prevStory ?
               <p className={"taCenter"}>
                 {"Previous story: "}
@@ -133,10 +141,26 @@ class DocumentPage extends Component {
               </p>
             : null
             }
+
             <hr/>
+
+            {docType === "articles" ?
+            <div className={"row"}>
+              <div className={"col-6 col-sm-7 col-md-8"}>
+                {firstSectionLines.map((line, i) =>
+                  <MarkdownLine {...{work, line}} key={i}/>
+                )}
+              </div>
+              <div className={"col-6 col-sm-5 col-md-4"}>
+                <InfoPanel article={docMetadata} work={work}/>
+              </div>
+            </div>
+            : null}
+
             {lines.map((line, i) =>
-              <MarkdownLine line={line} key={i}/>
+              <MarkdownLine {...{work, line}} key={i}/>
             )}
+
             {nextStory ?
               <div>
                 <hr/>

@@ -33,7 +33,6 @@ class App extends Component {
     fetch("/works_metadata.json")
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         this.setState({worksMetadata: data});
       });
   }
@@ -92,7 +91,7 @@ class App extends Component {
               }/>
               <Route path="/w/:workName/a/:docName" render={({match}) =>
                 <DocumentPage {...match.params} docType={"articles"} worksMetadata={worksMetadata}
-                              styleSetter={this.styleSetter.bind(this)}/>
+                              styleSetter={this.styleSetter.bind(this)} serialName={null}/>
               }/>
               <Route path="/w/:workName/:serialName/:docName" render={({match}) =>
                 <DocumentPage {...match.params} docType={"stories"} worksMetadata={worksMetadata}
