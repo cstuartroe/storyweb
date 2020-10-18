@@ -140,6 +140,17 @@ $sidePadding: 8vw;
         margin: 0 auto;
     }
 
+    .inlineTable {
+        display: block;
+        margin: 0 auto;
+        width: fit-content;
+
+        td {
+            padding: 1vh;
+            border: 1px solid;
+        }
+    }
+
     // Colors
 
     .theme-light {
@@ -147,8 +158,8 @@ $sidePadding: 8vw;
             color: $softDark;
         }
 
-        hr, .doctable, .doctable thead, .infoPanel {
-            border-color: $gray;
+        hr, .doctable, .doctable thead, .infoPanel, .inlineTable td {
+            border-color: $softDark;
         }
 
         .textBg {
@@ -160,7 +171,7 @@ $sidePadding: 8vw;
             color: white;
         }
 
-        hr, .doctable, .doctable thead, .infoPanel {
+        hr, .doctable, .doctable thead, .infoPanel, .inlineTable td {
             border-color: white;
         }
 

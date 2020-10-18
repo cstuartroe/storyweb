@@ -3,13 +3,23 @@ import {Link} from "react-router-dom";
 
 function ArticleTable({articles, workName, articleType}) {
   let articlesOfType = articles.filter(article => (article.type || null) === articleType);
-  articlesOfType.sort((a1, a2) => a1.title.localeCompare(a2.title));
+
+  if (articleType === "person") {
+    articlesOfType.sort((a1, a2) => a1.born.localeCompare(a2.born));
+  } else {
+    articlesOfType.sort((a1, a2) => a1.title.localeCompare(a2.title));
+  }
 
   return (
     <div className={"row articleTable"}>
       {articlesOfType.map(article =>
         <div className={"col-6 col-sm-4 col-md-3"} key={article.slug}>
-          <p><Link to={"/w/" + workName + "/a/" + article.slug}>{article.title}</Link></p>
+          <p>
+            <Link to={"/w/" + workName + "/a/" + article.slug}>
+              {article.title}
+              <br/>
+              {article.born?.substring(0,4) || null}{article.type === "person" ? "-" : null}{article.died?.substring(0,4) || null}
+            </Link></p>
         </div>
       )}
     </div>

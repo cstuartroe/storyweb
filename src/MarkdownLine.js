@@ -8,9 +8,35 @@ function makeMarkdownChildren(children, work) {
 }
 
 
+function markdownTable({table, work}) {
+  return <table className={"inlineTable"}><tbody>
+    {table.children.map((tr, i) =>
+    tr.type === "TableRow" ?
+      <tr key={i}>
+        {tr.children.map((td, j) =>
+        td.type === "TableCell" ?
+          <td key={j} style={{textAlign: table.align[j]}}>
+            {makeMarkdownChildren(td.children, work)}
+          </td>
+          : JSON.stringify(td))}
+      </tr>
+      : JSON.stringify(tr)
+    )}
+  </tbody></table>;
+}
+
+
 function MarkdownText({content, work}) {
   switch (content.type) {
     case "Str": return content.value;
+
+    case "Emphasis": return <span style={{fontStyle: "italic"}}>
+      {makeMarkdownChildren(content.children, work)}
+    </span>;
+
+    case "Strong": return <span style={{fontWeight: 800}}>
+      {makeMarkdownChildren(content.children, work)}
+    </span>;
 
     case "Link":
       if (content.url === "") {
@@ -43,14 +69,12 @@ function MarkdownText({content, work}) {
 
 
 function MarkdownLine({work, line}) {
-  if (line.type === "Header") {
-    return React.createElement("h" + line.depth, {}, makeMarkdownChildren(line.children, work));
-  } else if (line.type === "Paragraph") {
-    return <p>{makeMarkdownChildren(line.children, work)}</p>;
-  } else if (line.type === "HorizontalRule") {
-    return <hr/>
-  } else {
-    return <p>{JSON.stringify(line)}</p>
+  switch (line.type) {
+    case "Header": return React.createElement("h" + line.depth, {}, makeMarkdownChildren(line.children, work));
+    case "Paragraph": return <p>{makeMarkdownChildren(line.children, work)}</p>;
+    case "HorizontalRule": return <hr/>;
+    case "Table": return markdownTable({table: line, work});
+    default: return <p>{JSON.stringify(line)}</p>;
   }
 }
 
