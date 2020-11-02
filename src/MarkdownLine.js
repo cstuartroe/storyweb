@@ -25,6 +25,34 @@ function markdownTable({table, work}) {
   </tbody></table>;
 }
 
+function MarkdownList({list, work}) {
+  if (list.ordered) {
+    return <ol>
+      {list.children.map((item, i) =>
+        <MarkdownListItem key={i} {...{item, work}}/>
+      )}
+    </ol>;
+  } else {
+    return <ul>
+      {list.children.map((item, i) =>
+        <MarkdownListItem key={i} {...{item, work}}/>
+      )}
+    </ul>;
+  }
+}
+
+
+function MarkdownListItem({item, work}) {
+  if (item.type === "ListItem") {
+    if (item.children.length === 1 && item.children[0].type === "Paragraph") {
+      return <li>
+        {makeMarkdownChildren(item.children[0].children, work)}
+      </li>;
+    }
+  }
+  return JSON.stringify(item);
+}
+
 
 function MarkdownText({content, work}) {
   switch (content.type) {
@@ -74,6 +102,7 @@ function MarkdownLine({work, line}) {
     case "Paragraph": return <p>{makeMarkdownChildren(line.children, work)}</p>;
     case "HorizontalRule": return <hr/>;
     case "Table": return markdownTable({table: line, work});
+    case "List": return <MarkdownList list={line} work={work}/>;
     default: return <p>{JSON.stringify(line)}</p>;
   }
 }

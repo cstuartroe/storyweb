@@ -119,7 +119,7 @@ class DocumentPage extends Component {
               {docType === "stories" ?
                 "Part of "
                 :
-                articleTypeDescriptors[docMetadata.type] || "A noun in "
+                articleTypeDescriptors[docMetadata.type] || "In "
               }
               {serial ?
                 <span>

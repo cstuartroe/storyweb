@@ -13,7 +13,7 @@ $sidePadding: 8vw;
         padding-top: 1vh;
     }
 
-    p {
+    p, li {
         text-align: justify;
         margin: 3vh $sidePadding;
     }
@@ -154,7 +154,7 @@ $sidePadding: 8vw;
     // Colors
 
     .theme-light {
-        p, h1, h2, h3 {
+        p, h1, h2, h3, li {
             color: $softDark;
         }
 
@@ -167,7 +167,7 @@ $sidePadding: 8vw;
         }
     }
     .theme-dark {
-        p, h1, h2, h3, th, td {
+        p, h1, h2, h3, th, td, li {
             color: white;
         }
 
