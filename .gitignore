@@ -6,3 +6,4 @@ storyweb/settings_secret.py
 node_modules
 __pycache__
 static/js/main.js
+static/pdf

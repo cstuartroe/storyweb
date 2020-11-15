@@ -20,6 +20,7 @@ function StoryRow({story, workName, serials, serialName}) {
       </td>
       <td>{story.location}</td>
       <td>{story.date}</td>
+      <td>{story.word_count}</td>
       {serials.length === 0 ? null :
         <td>
           {serialsText}
@@ -43,6 +44,7 @@ function StoryTable({stories, workName, serials=[], dontSort=false, serialName=n
           <th>Title</th>
           <th>Location</th>
           <th>Date</th>
+          <th>Word Count</th>
           {serials.length === 0 ? null : <th>Part of the serial(s)</th>}
         </tr>
         </thead>

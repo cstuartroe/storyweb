@@ -24,6 +24,7 @@ class SerialPage extends Component {
     let work = getWorkMetadata(this.props);
     let serial = work.details.serials.filter(serial => serial.slug === serialName)[0];
     let stories = serial.stories.map(storyName => work.stories.filter(story => story.slug === storyName)[0]);
+    let wordCount = stories.map(s => s.word_count).reduce((a, b) => a+b, 0)
 
     return (
       <div className={"container textBg"}>
@@ -39,6 +40,7 @@ class SerialPage extends Component {
               <img src={"/w/" + work.slug + "/image/" + serial.image} alt={serial.image} className={"serialTopImage"}/>
             : null}
             <p>{serial.description}</p>
+            <p>Word count: {wordCount}</p>
             <hr/>
             <StoryTable {...{stories, serialName, workName}} dontSort={true}/>
           </div>

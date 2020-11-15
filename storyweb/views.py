@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.views.static import serve
-from django.http import JsonResponse
+from django.http import HttpResponse
 import os
 import yaml
 import re
-import urllib.parse
+import json
+
+from .utils import word_count
 
 
 def react_app(request):
@@ -40,7 +42,8 @@ def get_document_metadata(dirname, filename):
         lines = fh.readlines()
 
     out = {"slug": filename[:-3]}
-    for line in lines:
+    for i in range(len(lines)):
+        line = lines[i]
         if line.startswith("# "):
             out['title'] = line[2:].strip()
             break
@@ -53,6 +56,8 @@ def get_document_metadata(dirname, filename):
         else:
             raise ValueError("Markdown file must begin with optional metadata and then title: " + filepath)
 
+    out["word_count"] = word_count("\n".join(lines[i+1:]))
+
     if 'title' not in out:
         raise ValueError("Markdown file must have a title: " + filepath)
 
@@ -62,7 +67,6 @@ def get_document_metadata(dirname, filename):
 def markdown_files(dirname):
     out = []
     for filename in os.listdir(dirname):
-        print(filename)
         if filename.endswith(".md"):
             out.append(get_document_metadata(dirname, filename))
     return out
@@ -77,4 +81,6 @@ def works_metadata(request):
         work_metadata["stories"] = markdown_files(os.path.join("works", work, "stories"))
         work_metadata["articles"] = markdown_files(os.path.join("works", work, "articles"))
         data[work] = work_metadata
-    return JsonResponse(data)
+
+    output = json.dumps(data, indent=2, sort_keys=True)
+    return HttpResponse(output, content_type="application/json")
